@@ -33,6 +33,13 @@ catalogItems.forEach(item => {
   });
 });
 
+const modalBtn = document.querySelector('.modal-btn');
+if (modalBtn && catalogModal) {
+  modalBtn.addEventListener('click', (e) => {
+    catalogModal.classList.remove('active');
+  });
+}
+
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function (e) {
     const href = this.getAttribute('href');
@@ -40,10 +47,16 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       e.preventDefault();
       const target = document.querySelector(href);
       if (target) {
-        target.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        });
+        if (catalogModal && catalogModal.classList.contains('active')) {
+          catalogModal.classList.remove('active');
+        }
+        
+        setTimeout(() => {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }, 100);
       }
     }
   });
